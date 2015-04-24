@@ -1,7 +1,9 @@
 package org.iwanjunaid.pman;
 
 import android.content.*;
+import android.content.pm.PackageInfo;
 import android.net.*;
+
 import org.apache.cordova.*;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -13,6 +15,7 @@ public class PMan extends CordovaPlugin {
         JSONObject argObject = data.getJSONObject(0);
 
         try {
+        	String pName = argObject.getString("packageName");
             if (action.equals("uninstall")) {
                 Context context = cordova.getActivity().getApplicationContext();
                 Intent intent = new Intent(Intent.ACTION_DELETE);
@@ -20,7 +23,13 @@ public class PMan extends CordovaPlugin {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
                 callbackContext.success();
-
+                return true;
+            } else  if (action.equals("query")) {
+                Context context = cordova.getActivity().getApplicationContext();
+                android.content.pm.PackageManager mPm = context.getPackageManager();
+                PackageInfo info = mPm.getPackageInfo(pName, 0);  // 2,3
+                Boolean installed = info != null;
+                callbackContext.success();
                 return true;
             }
             else
