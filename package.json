@@ -1,6 +1,6 @@
 {
     "version": "0.1.0",
-    "name": "com.iwanjunaid.pman",
+    "name": "org.iwanjunaid.pman",
     "cordova_name": "PMan",
     "platforms": [
         "android"
